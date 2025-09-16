@@ -79,7 +79,7 @@ class EMGDataPreprocessor:
         
         return emg_data, labels, time
     
-    def resample_data(self, emg_data, time, target_fs=1000):
+    def resample_data(self, emg_data, labels, time, target_fs=1000):
         """Resample data to regular sampling rate"""
         print(f"🔄 Resampling to {target_fs} Hz...")
         
@@ -269,7 +269,7 @@ class EMGDataPreprocessor:
         emg_data, labels, time = self.load_subject_data(subject_id)
         
         # Resample to regular sampling rate
-        emg_data, labels, time = self.resample_data(emg_data, time, self.fs)
+        emg_data, labels, time = self.resample_data(emg_data, labels, time, self.fs)
         
         # Apply filters
         emg_data = self.apply_filters(emg_data)
