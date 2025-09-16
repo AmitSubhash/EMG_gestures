@@ -27,13 +27,33 @@ class EMGDataTunedAnalyzer:
         subject_folder = self.data_path / f"{subject_id:02d}"
         files = list(subject_folder.glob("*.txt"))
         
+        if not files:
+            raise FileNotFoundError(f"No data files found for subject {subject_id} in {subject_folder}")
+        
+        print(f"   📁 Found {len(files)} files: {[f.name for f in files]}")
+        
         all_data = []
         for file in files:
-            # Your data is tab-separated, not comma-separated
-            df = pd.read_csv(file, sep='\t')
-            df['file'] = file.name
-            all_data.append(df)
+            try:
+                print(f"   📄 Loading {file.name}...")
+                # Your data is tab-separated, not comma-separated
+                df = pd.read_csv(file, sep='\t')
+                print(f"      Shape: {df.shape}, Columns: {list(df.columns)}")
+                
+                if df.empty:
+                    print(f"      ⚠️  Warning: {file.name} is empty, skipping...")
+                    continue
+                    
+                df['file'] = file.name
+                all_data.append(df)
+            except Exception as e:
+                print(f"      ❌ Error loading {file.name}: {e}")
+                continue
         
+        if not all_data:
+            raise ValueError(f"No valid data loaded for subject {subject_id}")
+        
+        print(f"   ✅ Successfully loaded {len(all_data)} files")
         return pd.concat(all_data, ignore_index=True)
     
     def preprocess_data(self, data):

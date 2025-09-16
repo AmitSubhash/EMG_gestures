@@ -65,19 +65,39 @@ EMG_gestures/
 - Properly handles your data format and structure
 - Cross-channel features specific to your setup
 
+### **State-of-the-Art Architectures (2024-2025)**
+### 3. `scripts/vision_transformer_emg.py`
+- **Vision Transformer with 2D STFT representation**
+- Patch-based processing for EMG spectrograms
+- Multi-head attention and positional encoding
+- Optimized for 8-channel EMG data
+
+### 4. `scripts/attention_cnn_lstm_emg.py`
+- **Lightweight CNN + Bidirectional LSTM + Multi-head Attention**
+- Channel attention and temporal attention mechanisms
+- Captures local patterns and long-term dependencies
+- Real-time inference optimized
+
+### 5. `scripts/domain_adaptive_transformer_emg.py`
+- **Domain Adaptive Transformer for cross-subject generalization**
+- Adversarial training with domain discriminator
+- Gradient reversal layer for domain-invariant features
+- Addresses the hardest EMG challenge: cross-subject transfer
+
+### **Unified Training Pipeline**
+### 6. `scripts/unified_emg_training.py`
+- **Trains all three architectures with proper evaluation**
+- Cross-validation and performance comparison
+- Automated hyperparameter tuning
+- Comprehensive results visualization
+
 ### **Advanced Research Scripts**
-### 3. `scripts/advanced_feature_extraction.py`
+### 7. `scripts/advanced_feature_extraction.py`
 - **50+ features per channel** (2024-2025 SOTA)
 - Sample entropy, DFA, Wavelet transforms
 - Cross-channel spatial features
 
-### 4. `scripts/state_of_the_art_models.py`
-- **Vision Transformers** for EMG classification
-- **Attention CNN-LSTM** with multi-head attention
-- **Domain Adaptive Transformers** for cross-subject generalization
-- **Hybrid Transformer-CNN** architectures
-
-### 5. `scripts/research_integration_analysis.py`
+### 8. `scripts/research_integration_analysis.py`
 - **Complete 2024-2025 research integration**
 - Performance comparison with baseline
 - Cross-subject generalization analysis
@@ -97,13 +117,13 @@ EMG_gestures/
 ### Today
 1. **Start with tuned analysis**: `python scripts/emg_data_tuned_analysis.py`
 2. **Extract tuned features**: `python scripts/emg_tuned_feature_extraction.py`
-3. Review generated visualizations and data-specific insights
+3. **Run unified training**: `python scripts/unified_emg_training.py`
 
 ### This Week
-1. **Advanced features**: `python scripts/advanced_feature_extraction.py`
-2. **SOTA models**: `python scripts/state_of_the_art_models.py`
+1. **Individual architectures**: Run each SOTA model separately
+2. **Advanced features**: `python scripts/advanced_feature_extraction.py`
 3. **Research integration**: `python scripts/research_integration_analysis.py`
-4. Evaluate cross-subject performance
+4. **Cross-subject evaluation**: Test on multiple subjects
 
 ### Next Week
 1. Implement ensemble methods
