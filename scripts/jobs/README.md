@@ -22,16 +22,22 @@ EMG_gestures/
 - **Output**: Analysis reports and visualizations
 
 ### 2. Vision Transformer (`vision_transformer_job.slurm`)
-- **Duration**: 4 hours
-- **Resources**: 8 CPUs, 16GB RAM
+- **Duration**: 3.5 hours
+- **Resources**: 4 CPUs, 8GB RAM, 1 GPU
 - **Purpose**: Train Vision Transformer on STFT spectrograms
 - **Output**: Trained model and performance metrics
 
-### 3. Complete Pipeline (`complete_emg_pipeline_job.slurm`)
-- **Duration**: 8 hours
-- **Resources**: 8 CPUs, 32GB RAM
-- **Purpose**: Run all analysis and train all three models
-- **Output**: Complete results and model comparison
+### 3. Attention CNN-LSTM (`attention_cnn_lstm_job.slurm`)
+- **Duration**: 3.5 hours
+- **Resources**: 4 CPUs, 8GB RAM, 1 GPU
+- **Purpose**: Train Attention CNN-LSTM on time-series data
+- **Output**: Trained model and performance metrics
+
+### 4. Domain Adaptive Transformer (`domain_adaptive_job.slurm`)
+- **Duration**: 3.5 hours
+- **Resources**: 4 CPUs, 8GB RAM, 1 GPU
+- **Purpose**: Train Domain Adaptive Transformer for cross-subject generalization
+- **Output**: Trained model and performance metrics
 
 ## How to Submit Jobs
 
