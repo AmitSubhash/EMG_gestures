@@ -438,13 +438,28 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"📱 Using device: {device}")
     
-    # Load data
+    # Load data from multiple subjects for better performance
     data_path = Path("../EMG_data")
-    emg_data, labels = load_emg_data(data_path, subject_id=1)
+    print("📊 Loading data from multiple subjects...")
     
-    # Create dataset
-    dataset = EMGSTFTDataset(emg_data, labels, window_size=1000, overlap=0.5)
-    print(f"📊 Created {len(dataset)} windows")
+    all_windows = []
+    all_labels = []
+    
+    # Load data from first 3 subjects
+    for subject_id in [1, 2, 3]:
+        try:
+            emg_data, labels = load_emg_data(data_path, subject_id=subject_id)
+            dataset = EMGSTFTDataset(emg_data, labels, window_size=1000, overlap=0.5)
+            all_windows.extend(dataset.windows)
+            all_labels.extend(dataset.window_labels)
+            print(f"   ✅ Subject {subject_id}: {len(dataset)} windows")
+        except Exception as e:
+            print(f"   ⚠️  Subject {subject_id}: {e}")
+            continue
+    
+    # Create combined dataset
+    dataset = EMGSTFTDataset(np.array(all_windows), np.array(all_labels), window_size=1000, overlap=0.5)
+    print(f"📊 Total windows: {len(dataset)}")
     
     # Split data
     train_size = int(0.7 * len(dataset))
@@ -477,7 +492,7 @@ def main():
     
     # Train model
     trainer = EMGVisionTransformerTrainer(model, device)
-    results = trainer.train(train_loader, val_loader, epochs=2)
+    results = trainer.train(train_loader, val_loader, epochs=10)
     
     # Evaluate on test set
     print("\n📊 Final Test Evaluation:")
