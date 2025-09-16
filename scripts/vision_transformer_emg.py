@@ -177,7 +177,9 @@ class VisionTransformerEMG(nn.Module):
         
         self.patch_embed = PatchEmbedding(img_size, patch_size, in_channels, embed_dim)
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
-        self.pos_embed = nn.Parameter(torch.zeros(1, self.patch_embed.n_patches + 1, embed_dim))
+        # Initialize with max expected size, will be adjusted dynamically
+        self.max_patches = 1000  # Large enough for any reasonable input
+        self.pos_embed = nn.Parameter(torch.zeros(1, self.max_patches + 1, embed_dim))
         self.dropout = nn.Dropout(dropout)
         
         # Transformer blocks
@@ -199,8 +201,18 @@ class VisionTransformerEMG(nn.Module):
         cls_tokens = self.cls_token.expand(B, -1, -1)
         x = torch.cat((cls_tokens, x), dim=1)
         
-        # Add positional embedding
-        x = x + self.pos_embed
+        # Add positional embedding (adjust size dynamically)
+        n_patches = x.shape[1]
+        if n_patches > self.pos_embed.shape[1]:
+            # If we need more patches than expected, extend the positional embedding
+            additional_patches = n_patches - self.pos_embed.shape[1]
+            additional_pos_embed = torch.zeros(1, additional_patches, self.pos_embed.shape[2], 
+                                            device=self.pos_embed.device, dtype=self.pos_embed.dtype)
+            self.pos_embed = nn.Parameter(torch.cat([self.pos_embed, additional_pos_embed], dim=1))
+        
+        # Use only the needed portion of positional embedding
+        pos_embed = self.pos_embed[:, :n_patches, :]
+        x = x + pos_embed
         x = self.dropout(x)
         
         # Apply transformer blocks
@@ -465,7 +477,7 @@ def main():
     
     # Train model
     trainer = EMGVisionTransformerTrainer(model, device)
-    results = trainer.train(train_loader, val_loader, epochs=50)
+    results = trainer.train(train_loader, val_loader, epochs=2)
     
     # Evaluate on test set
     print("\n📊 Final Test Evaluation:")
