@@ -4,7 +4,7 @@
 #SBATCH --error=../logs/emg_cnn_lstm_%j.err   # Standard error file (with job id in file name)
 #SBATCH --mail-type=ALL                       # Email notifications for all job events
 #SBATCH --mail-user=atsubhas@iu.edu           # Email address for notifications
-#SBATCH -p gpu-interactive                    # Partition name
+#SBATCH -p gpu                                # Partition name
 #SBATCH --gpus-per-node=1                     # Request one GPU per node
 #SBATCH -A r00602                             # Project/account number
 #SBATCH --mem=8G                              # Memory per node

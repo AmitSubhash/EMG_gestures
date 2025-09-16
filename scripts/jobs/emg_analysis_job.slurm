@@ -4,7 +4,7 @@
 #SBATCH --error=../logs/emg_analysis_%j.err   # Standard error file (with job id in file name)
 #SBATCH --mail-type=ALL                       # Email notifications for all job events
 #SBATCH --mail-user=atsubhas@iu.edu           # Email address for notifications
-#SBATCH -p normal                             # Partition name
+#SBATCH -p gpu                        # Partition name
 #SBATCH -A r00602                             # Project/account number
 #SBATCH --mem=8G                              # Memory per node
 #SBATCH --time=02:00:00                       # Maximum walltime (hh:mm:ss)
