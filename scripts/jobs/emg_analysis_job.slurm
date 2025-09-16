@@ -15,6 +15,9 @@
 # Load required modules
 module load python/3.12.4
 
+# Change to scripts directory first
+cd "$(dirname "$0")/.."
+
 # Activate existing virtual environment
 echo "🔧 Activating existing virtual environment..."
 source venv/bin/activate

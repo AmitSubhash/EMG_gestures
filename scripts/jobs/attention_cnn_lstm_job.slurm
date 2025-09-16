@@ -15,7 +15,10 @@
 
 # Load required modules
 module load python/gpu/3.11.5
-module load cuda/11.7
+module load cudatoolkit/11.7
+
+# Change to scripts directory first
+cd "$(dirname "$0")/.."
 
 # Activate existing virtual environment
 echo "🔧 Activating existing virtual environment..."

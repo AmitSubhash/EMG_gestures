@@ -15,7 +15,10 @@
 
 # Load required modules
 module load python/gpu/3.11.5
-module load cuda/11.7
+module load cudatoolkit/11.7
+
+# Change to scripts directory first
+cd "$(dirname "$0")/.."
 
 # Activate existing virtual environment
 echo "🔧 Activating existing virtual environment..."
@@ -25,12 +28,9 @@ source venv/bin/activate
 echo "📦 Verifying packages..."
 python3 -c "import torch, numpy, pandas, matplotlib, scipy, sklearn, pywt; print('✅ All packages available')"
 
-# -------------------- Change Directory and Run Python Script --------------------
+# -------------------- Run Python Script --------------------
 
-# Change directory to where your Python scripts are located
-cd "$(dirname "$0")/.."
-
-# Run the Python script
+# Run the Python script (already in correct directory)
 python3 vision_transformer_emg.py
 
 # Organize outputs with timestamp
