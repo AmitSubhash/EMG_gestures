@@ -17,8 +17,13 @@
 module load python/gpu/3.11.5
 module load cuda/11.7
 
-# Activate your virtual environment
+# Activate existing virtual environment
+echo "🔧 Activating existing virtual environment..."
 source venv/bin/activate
+
+# Verify packages are available
+echo "📦 Verifying packages..."
+python3 -c "import torch, numpy, pandas, matplotlib, scipy, sklearn, pywt; print('✅ All packages available')"
 
 # -------------------- Change Directory and Run Python Script --------------------
 

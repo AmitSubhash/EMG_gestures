@@ -13,11 +13,15 @@
 # -------------------- Module Loads and Environment Setup --------------------
 
 # Load required modules
-module load python/3.9
-module load gcc/9.3.0
+module load python/3.12.4
 
-# Activate your virtual environment
+# Activate existing virtual environment
+echo "🔧 Activating existing virtual environment..."
 source venv/bin/activate
+
+# Verify packages are available
+echo "📦 Verifying packages..."
+python3 -c "import numpy, pandas, matplotlib, scipy, sklearn, pywt; print('✅ All packages available')"
 
 # -------------------- Change Directory and Run Python Scripts --------------------
 
