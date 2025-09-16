@@ -492,7 +492,7 @@ def main():
     
     # Train model
     trainer = EMGVisionTransformerTrainer(model, device)
-    results = trainer.train(train_loader, val_loader, epochs=10)
+    results = trainer.train(train_loader, val_loader, epochs=50)
     
     # Evaluate on test set
     print("\n📊 Final Test Evaluation:")
@@ -507,6 +507,17 @@ def main():
     print("\n🎉 Vision Transformer training complete!")
     print(f"✅ Best F1-Score: {results['best_f1']:.4f}")
     print("✅ Model saved as 'best_vit_emg_model.pth'")
+    
+    # Save training history
+    import json
+    with open('vit_training_history.json', 'w') as f:
+        json.dump(results, f, indent=2)
+    print("✅ Training history saved as 'vit_training_history.json'")
+    
+    # Organize outputs
+    print("📁 Organizing outputs...")
+    import subprocess
+    subprocess.run(['python3', 'organize_outputs.py'], check=True)
 
 if __name__ == "__main__":
     main()

@@ -28,6 +28,10 @@ cd "$(dirname "$0")/.."
 # Run the Python script
 python3 vision_transformer_emg.py
 
+# Organize outputs with timestamp
+echo "📁 Organizing outputs..."
+python3 organize_outputs.py
+
 echo "✅ Vision Transformer training complete!"
-echo "📊 Check the results and model files"
+echo "📊 Check the organized results in results/run_*/"
 echo "Job finished at: $(date)"

@@ -29,6 +29,10 @@ python3 emg_data_tuned_analysis.py
 python3 emg_tuned_feature_extraction.py
 python3 emg_data_preprocessing.py
 
+# Organize outputs with timestamp
+echo "📁 Organizing outputs..."
+python3 organize_outputs.py
+
 echo "✅ Analysis pipeline complete!"
-echo "📁 Check the generated files and visualizations"
+echo "📁 Check the organized results in results/run_*/"
 echo "Job finished at: $(date)"
