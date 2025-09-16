@@ -332,8 +332,8 @@ def main():
     print("🚀 EMG Data Analysis - Tuned for Your Dataset")
     print("=" * 60)
     
-    # Initialize analyzer
-    data_path = "/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data"
+    # Initialize analyzer - data is in parent directory
+    data_path = "../EMG_data"
     analyzer = EMGDataTunedAnalyzer(data_path)
     
     # Analyze first subject
