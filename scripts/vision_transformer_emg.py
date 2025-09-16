@@ -442,24 +442,32 @@ def main():
     data_path = Path("../EMG_data")
     print("📊 Loading data from multiple subjects...")
     
-    all_windows = []
+    # Load data from first 3 subjects
+    all_emg_data = []
     all_labels = []
     
-    # Load data from first 3 subjects
     for subject_id in [1, 2, 3]:
         try:
             emg_data, labels = load_emg_data(data_path, subject_id=subject_id)
-            dataset = EMGSTFTDataset(emg_data, labels, window_size=1000, overlap=0.5)
-            all_windows.extend(dataset.windows)
-            all_labels.extend(dataset.window_labels)
-            print(f"   ✅ Subject {subject_id}: {len(dataset)} windows")
+            all_emg_data.append(emg_data)
+            all_labels.append(labels)
+            print(f"   ✅ Subject {subject_id}: {len(emg_data)} samples")
         except Exception as e:
             print(f"   ⚠️  Subject {subject_id}: {e}")
             continue
     
-    # Create combined dataset
-    dataset = EMGSTFTDataset(np.array(all_windows), np.array(all_labels), window_size=1000, overlap=0.5)
-    print(f"📊 Total windows: {len(dataset)}")
+    # Combine all data
+    if all_emg_data:
+        combined_emg_data = np.vstack(all_emg_data)
+        combined_labels = np.concatenate(all_labels)
+        print(f"📊 Combined data: {len(combined_emg_data)} samples")
+        
+        # Create dataset from combined data
+        dataset = EMGSTFTDataset(combined_emg_data, combined_labels, window_size=1000, overlap=0.5)
+        print(f"📊 Total windows: {len(dataset)}")
+    else:
+        print("❌ No data loaded!")
+        return
     
     # Split data
     train_size = int(0.7 * len(dataset))
