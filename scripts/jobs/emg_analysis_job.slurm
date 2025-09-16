@@ -17,6 +17,7 @@ module load python/3.12.4
 
 # Change to scripts directory first
 cd "$(dirname "$0")/.."
+echo "📁 Current directory: $(pwd)"
 
 # Activate existing virtual environment
 echo "🔧 Activating existing virtual environment..."
@@ -26,19 +27,17 @@ source venv/bin/activate
 echo "📦 Verifying packages..."
 python3 -c "import numpy, pandas, matplotlib, scipy, sklearn, pywt; print('✅ All packages available')"
 
-# -------------------- Change Directory and Run Python Scripts --------------------
+# -------------------- Run Python Scripts --------------------
 
-# Change directory to where your Python scripts are located
-cd "$(dirname "$0")/.."
-
-# Run the Python scripts
-python3 emg_data_tuned_analysis.py
-python3 emg_tuned_feature_extraction.py
-python3 emg_data_preprocessing.py
+# Run the Python scripts with full paths
+echo "🚀 Running EMG Analysis Pipeline..."
+python3 scripts/emg_data_tuned_analysis.py
+python3 scripts/emg_tuned_feature_extraction.py
+python3 scripts/emg_data_preprocessing.py
 
 # Organize outputs with timestamp
 echo "📁 Organizing outputs..."
-python3 organize_outputs.py
+python3 scripts/organize_outputs.py
 
 echo "✅ Analysis pipeline complete!"
 echo "📁 Check the organized results in results/run_*/"

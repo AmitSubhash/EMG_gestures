@@ -19,6 +19,8 @@ module load cudatoolkit/11.7
 
 # Change to scripts directory first
 cd "$(dirname "$0")/.."
+echo "📁 Current directory: $(pwd)"
+echo "📁 Contents: $(ls -la)"
 
 # Activate existing virtual environment
 echo "🔧 Activating existing virtual environment..."
@@ -30,12 +32,13 @@ python3 -c "import torch, numpy, pandas, matplotlib, scipy, sklearn, pywt; print
 
 # -------------------- Run Python Script --------------------
 
-# Run the Python script (already in correct directory)
-python3 vision_transformer_emg.py
+# Run the Python script with full path
+echo "🚀 Running Vision Transformer..."
+python3 scripts/vision_transformer_emg.py
 
 # Organize outputs with timestamp
 echo "📁 Organizing outputs..."
-python3 organize_outputs.py
+python3 scripts/organize_outputs.py
 
 echo "✅ Vision Transformer training complete!"
 echo "📊 Check the organized results in results/run_*/"

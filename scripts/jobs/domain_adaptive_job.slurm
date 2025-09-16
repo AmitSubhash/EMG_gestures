@@ -19,6 +19,7 @@ module load cudatoolkit/11.7
 
 # Change to scripts directory first
 cd "$(dirname "$0")/.."
+echo "📁 Current directory: $(pwd)"
 
 # Activate existing virtual environment
 echo "🔧 Activating existing virtual environment..."
@@ -28,13 +29,15 @@ source venv/bin/activate
 echo "📦 Verifying packages..."
 python3 -c "import torch, numpy, pandas, matplotlib, scipy, sklearn, pywt; print('✅ All packages available')"
 
-# -------------------- Change Directory and Run Python Script --------------------
+# -------------------- Run Python Script --------------------
 
-# Change directory to where your Python scripts are located
-cd "$(dirname "$0")/.."
+# Run the Python script with full path
+echo "🚀 Running Domain Adaptive Transformer..."
+python3 scripts/domain_adaptive_transformer_emg.py
 
-# Run the Python script
-python3 domain_adaptive_transformer_emg.py
+# Organize outputs with timestamp
+echo "📁 Organizing outputs..."
+python3 scripts/organize_outputs.py
 
 echo "✅ Domain Adaptive Transformer training complete!"
 echo "📊 Check the results and model files"
