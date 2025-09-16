@@ -68,14 +68,14 @@ class EMGTunedFeatureExtractor:
             channel_signal = emg_data[:, ch]
             
             # Basic features
-            features[f'MAV_ch{ch+1}'] = np.mean(np.abs(channel_channel_signal))
-            features[f'RMS_ch{ch+1}'] = np.sqrt(np.mean(channel_channel_signal**2))
-            features[f'VAR_ch{ch+1}'] = np.var(channel_channel_signal)
-            features[f'STD_ch{ch+1}'] = np.std(channel_channel_signal)
-            features[f'WL_ch{ch+1}'] = np.sum(np.abs(np.diff(channel_channel_signal)))
-            features[f'ZC_ch{ch+1}'] = self._zero_crossing_rate(channel_channel_signal)
-            features[f'SSC_ch{ch+1}'] = self._slope_sign_changes(channel_channel_signal)
-            features[f'IEMG_ch{ch+1}'] = np.sum(np.abs(channel_channel_signal))
+            features[f'MAV_ch{ch+1}'] = np.mean(np.abs(channel_signal))
+            features[f'RMS_ch{ch+1}'] = np.sqrt(np.mean(channel_signal**2))
+            features[f'VAR_ch{ch+1}'] = np.var(channel_signal)
+            features[f'STD_ch{ch+1}'] = np.std(channel_signal)
+            features[f'WL_ch{ch+1}'] = np.sum(np.abs(np.diff(channel_signal)))
+            features[f'ZC_ch{ch+1}'] = self._zero_crossing_rate(channel_signal)
+            features[f'SSC_ch{ch+1}'] = self._slope_sign_changes(channel_signal)
+            features[f'IEMG_ch{ch+1}'] = np.sum(np.abs(channel_signal))
             
             # Advanced time features
             features[f'ARV_ch{ch+1}'] = np.mean(np.abs(channel_signal))  # Average Rectified Value
