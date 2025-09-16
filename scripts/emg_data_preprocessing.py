@@ -417,8 +417,8 @@ def main():
     print("🚀 EMG Data Preprocessing Pipeline")
     print("=" * 60)
     
-    # Initialize preprocessor
-    data_path = "/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data"
+    # Initialize preprocessor - data is in parent directory
+    data_path = "../EMG_data"
     preprocessor = EMGDataPreprocessor(data_path)
     
     # Preprocess for all architectures

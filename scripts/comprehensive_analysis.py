@@ -419,7 +419,7 @@ class ComprehensiveEMGAnalysis:
 
 def main():
     """Run comprehensive analysis"""
-    data_path = "/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data"
+    data_path = "../EMG_data"
     
     # Initialize analysis
     analysis = ComprehensiveEMGAnalysis(data_path)

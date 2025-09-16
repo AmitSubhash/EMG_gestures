@@ -332,7 +332,7 @@ def main():
     print("=" * 50)
     
     # Initialize analyzer
-    data_path = "/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data"
+    data_path = "../EMG_data"
     analyzer = QuickEMGAnalyzer(data_path)
     
     # Analyze a few subjects

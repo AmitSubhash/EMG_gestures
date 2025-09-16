@@ -520,7 +520,7 @@ def main():
     print(f"📱 Using device: {device}")
     
     # Load multi-subject data
-    data_path = Path("/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data")
+    data_path = Path("../EMG_data")
     emg_data, labels, subject_ids = load_multi_subject_data(data_path, subject_ids=[1, 2, 3, 4, 5])
     
     # Create dataset

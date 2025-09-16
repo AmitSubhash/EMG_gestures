@@ -425,7 +425,7 @@ def main():
     print(f"📱 Using device: {device}")
     
     # Load data
-    data_path = Path("/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data")
+    data_path = Path("../EMG_data")
     emg_data, labels = load_emg_data(data_path, subject_id=1)
     
     # Create dataset

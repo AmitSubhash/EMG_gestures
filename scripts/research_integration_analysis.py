@@ -513,7 +513,7 @@ class ResearchIntegrationAnalyzer:
 
 def main():
     """Run research integration analysis"""
-    data_path = "/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data"
+    data_path = "../EMG_data"
     
     # Initialize analyzer
     analyzer = ResearchIntegrationAnalyzer(data_path)

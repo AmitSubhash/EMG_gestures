@@ -464,7 +464,7 @@ def main():
     print(f"📱 Using device: {device}")
     
     # Initialize trainer
-    data_path = "/Users/amitsubhash/Downloads/EMG/EMG_gestures/EMG_data"
+    data_path = "../EMG_data"
     trainer = UnifiedEMGTrainer(data_path, device)
     
     # Run full training
