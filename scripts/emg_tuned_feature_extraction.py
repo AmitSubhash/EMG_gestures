@@ -65,21 +65,21 @@ class EMGTunedFeatureExtractor:
         features = {}
         
         for ch in range(self.n_channels):
-            signal = emg_data[:, ch]
+            channel_signal = emg_data[:, ch]
             
             # Basic features
-            features[f'MAV_ch{ch+1}'] = np.mean(np.abs(signal))
-            features[f'RMS_ch{ch+1}'] = np.sqrt(np.mean(signal**2))
-            features[f'VAR_ch{ch+1}'] = np.var(signal)
-            features[f'STD_ch{ch+1}'] = np.std(signal)
-            features[f'WL_ch{ch+1}'] = np.sum(np.abs(np.diff(signal)))
-            features[f'ZC_ch{ch+1}'] = self._zero_crossing_rate(signal)
-            features[f'SSC_ch{ch+1}'] = self._slope_sign_changes(signal)
-            features[f'IEMG_ch{ch+1}'] = np.sum(np.abs(signal))
+            features[f'MAV_ch{ch+1}'] = np.mean(np.abs(channel_channel_signal))
+            features[f'RMS_ch{ch+1}'] = np.sqrt(np.mean(channel_channel_signal**2))
+            features[f'VAR_ch{ch+1}'] = np.var(channel_channel_signal)
+            features[f'STD_ch{ch+1}'] = np.std(channel_channel_signal)
+            features[f'WL_ch{ch+1}'] = np.sum(np.abs(np.diff(channel_channel_signal)))
+            features[f'ZC_ch{ch+1}'] = self._zero_crossing_rate(channel_channel_signal)
+            features[f'SSC_ch{ch+1}'] = self._slope_sign_changes(channel_channel_signal)
+            features[f'IEMG_ch{ch+1}'] = np.sum(np.abs(channel_channel_signal))
             
             # Advanced time features
-            features[f'ARV_ch{ch+1}'] = np.mean(np.abs(signal))  # Average Rectified Value
-            features[f'SSI_ch{ch+1}'] = np.sum(signal**2)  # Simple Square Integral
+            features[f'ARV_ch{ch+1}'] = np.mean(np.abs(channel_signal))  # Average Rectified Value
+            features[f'SSI_ch{ch+1}'] = np.sum(channel_signal**2)  # Simple Square Integral
         
         return features
     
@@ -88,10 +88,10 @@ class EMGTunedFeatureExtractor:
         features = {}
         
         for ch in range(self.n_channels):
-            signal = emg_data[:, ch]
+            channel_signal = emg_data[:, ch]
             
             # Power spectral density
-            f, psd = welch(signal, fs=self.fs, nperseg=min(256, len(signal)//4))
+            f, psd = welch(channel_signal, fs=self.fs, nperseg=min(256, len(channel_signal)//4))
             
             # Basic frequency features
             features[f'PSD_MEAN_ch{ch+1}'] = np.mean(psd)
@@ -114,10 +114,10 @@ class EMGTunedFeatureExtractor:
         features = {}
         
         for ch in range(self.n_channels):
-            signal = emg_data[:, ch]
+            channel_signal = emg_data[:, ch]
             
             # Short-Time Fourier Transform
-            f, t, stft = signal.stft(signal, fs=self.fs, nperseg=64)
+            f, t, stft = signal.stft(channel_signal, fs=self.fs, nperseg=64)
             stft_magnitude = np.abs(stft)
             
             # STFT features
@@ -127,7 +127,7 @@ class EMGTunedFeatureExtractor:
             features[f'STFT_ENTROPY_ch{ch+1}'] = self._calculate_entropy(stft_magnitude)
             
             # Wavelet features
-            coeffs = pywt.wavedec(signal, 'db4', level=4)
+            coeffs = pywt.wavedec(channel_signal, 'db4', level=4)
             features[f'WAVELET_ENERGY_ch{ch+1}'] = np.sum([np.sum(c**2) for c in coeffs])
             features[f'WAVELET_ENTROPY_ch{ch+1}'] = self._wavelet_entropy(coeffs)
         
@@ -138,15 +138,15 @@ class EMGTunedFeatureExtractor:
         features = {}
         
         for ch in range(self.n_channels):
-            signal = emg_data[:, ch]
+            channel_signal = emg_data[:, ch]
             
             # Statistical features
-            features[f'SKEW_ch{ch+1}'] = skew(signal)
-            features[f'KURT_ch{ch+1}'] = kurtosis(signal)
+            features[f'SKEW_ch{ch+1}'] = skew(channel_signal)
+            features[f'KURT_ch{ch+1}'] = kurtosis(channel_signal)
             
             # Nonlinear features
-            features[f'SAMP_ENTROPY_ch{ch+1}'] = self._sample_entropy(signal)
-            features[f'DFA_ch{ch+1}'] = self._detrended_fluctuation_analysis(signal)
+            features[f'SAMP_ENTROPY_ch{ch+1}'] = self._sample_entropy(channel_signal)
+            features[f'DFA_ch{ch+1}'] = self._detrended_fluctuation_analysis(channel_signal)
         
         return features
     
@@ -179,16 +179,16 @@ class EMGTunedFeatureExtractor:
         
         return features
     
-    def _zero_crossing_rate(self, signal):
+    def _zero_crossing_rate(self, channel_signal):
         """Calculate zero crossing rate"""
-        zero_crossings = np.where(np.diff(np.signbit(signal)))[0]
-        return len(zero_crossings) / len(signal)
+        zero_crossings = np.where(np.diff(np.signbit(channel_signal)))[0]
+        return len(zero_crossings) / len(channel_signal)
     
-    def _slope_sign_changes(self, signal):
+    def _slope_sign_changes(self, channel_signal):
         """Calculate slope sign changes"""
-        diff = np.diff(signal)
+        diff = np.diff(channel_signal)
         slope_changes = np.where(np.diff(np.sign(diff)))[0]
-        return len(slope_changes) / len(signal)
+        return len(slope_changes) / len(channel_signal)
     
     def _spectral_rolloff(self, f, psd, rolloff=0.85):
         """Calculate spectral rolloff"""
@@ -225,21 +225,21 @@ class EMGTunedFeatureExtractor:
         probabilities = [e / total_energy for e in energies]
         return -sum(p * np.log2(p + 1e-10) for p in probabilities)
     
-    def _sample_entropy(self, signal, m=2, r=0.2):
+    def _sample_entropy(self, channel_signal, m=2, r=0.2):
         """Calculate sample entropy"""
-        N = len(signal)
+        N = len(channel_signal)
         if N < m + 1:
             return 0
         
-        # Normalize signal
-        signal = (signal - np.mean(signal)) / np.std(signal)
+        # Normalize channel_signal
+        channel_signal = (channel_signal - np.mean(channel_signal)) / np.std(channel_signal)
         
         def _maxdist(xi, xj, m):
             return max([abs(ua - va) for ua, va in zip(xi, xj)])
         
-        def _get_matches(signal, m, r):
-            N = len(signal)
-            patterns = np.array([signal[i:i + m] for i in range(N - m + 1)])
+        def _get_matches(channel_signal, m, r):
+            N = len(channel_signal)
+            patterns = np.array([channel_signal[i:i + m] for i in range(N - m + 1)])
             matches = np.zeros(N - m + 1)
             for i in range(N - m + 1):
                 for j in range(i + 1, N - m + 1):
@@ -248,21 +248,21 @@ class EMGTunedFeatureExtractor:
                         matches[j] += 1
             return matches
         
-        matches_m = _get_matches(signal, m, r)
-        matches_m1 = _get_matches(signal, m + 1, r)
+        matches_m = _get_matches(channel_signal, m, r)
+        matches_m1 = _get_matches(channel_signal, m + 1, r)
         
         phi_m = np.mean(matches_m) / (N - m)
         phi_m1 = np.mean(matches_m1) / (N - m - 1)
         
         return -np.log(phi_m1 / phi_m) if phi_m1 > 0 and phi_m > 0 else 0
     
-    def _detrended_fluctuation_analysis(self, signal, min_n=4, max_n=None):
+    def _detrended_fluctuation_analysis(self, channel_signal, min_n=4, max_n=None):
         """Calculate DFA scaling exponent"""
         if max_n is None:
-            max_n = len(signal) // 4
+            max_n = len(channel_signal) // 4
         
-        # Integrate signal
-        y = np.cumsum(signal - np.mean(signal))
+        # Integrate channel_signal
+        y = np.cumsum(channel_signal - np.mean(channel_signal))
         
         # Calculate fluctuation for different window sizes
         n_values = np.logspace(np.log10(min_n), np.log10(max_n), 10).astype(int)
